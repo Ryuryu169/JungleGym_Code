@@ -1,16 +1,25 @@
 # jungle_gym
 
-A new Flutter project.
+ここに色々作品で完成したものを入れていってください！
+Teams でも言ったように、自身のブランチを作ってからコミットしてください～
+Firebase の設定はしてありますが、エラーが起きた際にはご連絡下さい！
+原則 SQLite は使わないつもりですが、何かFirebase で不都合があった際にはご連絡ください！
 
-## Getting Started
+注記・作成者
+##レウェティ
+main.dart
+→特になし
 
-This project is a starting point for a Flutter application.
+##廣田
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+##井
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+##阿部
+
+
+##西尾
+
+
+##伊藤
