@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "858999482242",
+    "project_id": "junglegym-cd7fd",
+    "storage_bucket": "junglegym-cd7fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858999482242:android:e37a09219a99149a12919b",
+        "android_client_info": {
+          "package_name": "com.doushinkaiki.jungle_gym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858999482242-6s0tr068doslv3gusovvh5fcseoa78vm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doushinkaiki.jungle_gym",
+            "certificate_hash": "a4e6dedab47a7b42a66601c62bab5e9a01e2cf89"
+          }
+        },
+        {
+          "client_id": "858999482242-tp49dsiugjkuoch272b5e462565pc8ov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP2LhUWFcR5qTRgni_bjFm56MjTRjhaDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858999482242-tp49dsiugjkuoch272b5e462565pc8ov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
