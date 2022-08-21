@@ -1,30 +1,14 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class KaigiPage extends StatefulWidget {
+  const KaigiPage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<KaigiPage> createState() => _KaigiPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _KaigiPageState extends State<KaigiPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     padding: EdgeInsets.only(left: 30,top: 20),
                     child: Row(
-                      children: [
+                      children: const [
                         Icon(Icons.account_circle,///それぞれのアカウントの画像かアイコンを参加者が来るたびに配置
                           color: Colors.black87,
                           size: 45,),
