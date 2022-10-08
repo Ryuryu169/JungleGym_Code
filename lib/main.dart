@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'Login/Login.dart';
+import 'package:jungle_gym/src/Login/LoginPage.dart';
 
-import 'Kaigi.dart';
+import 'debug/firebase_options.dart';
+import 'debug/mainDub.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  runApp(const MyApp1());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const KaigiPage(title: 'Flutter Demo Home Page'),
+      home: const LoginPage(),
     );
   }
 }
