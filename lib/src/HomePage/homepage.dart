@@ -11,17 +11,16 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: Text("ホームページ"),
+        title: const Text("ホームページ"),
       ),
       body: Column(
           children: [
             Container(
-              padding:  EdgeInsets.all(10),
+              padding:  const EdgeInsets.all(10),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      child: const Text("通知"),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
                         onPrimary:  Colors.white,
@@ -50,9 +49,9 @@ class HomePage extends StatelessWidget {
                           ),
                         );
                       },
+                      child: const Text("通知"),
                     ),
                     ElevatedButton(
-                      child: const Text("フレンド"),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
                         onPrimary:  Colors.white,
@@ -81,6 +80,7 @@ class HomePage extends StatelessWidget {
                           ),
                         );
                       },
+                      child: const Text("フレンド"),
                     ),
                     ElevatedButton(
                       child: const Text("設定"),
@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
                           context,
                           PageRouteBuilder(
                             pageBuilder: (context, animation, secondaryAnimation) {
-                              return SettingPage();
+                              return const SettingPage();
                             },
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {

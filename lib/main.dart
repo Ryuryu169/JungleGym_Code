@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:jungle_gym/src/Login/LoginPage.dart';
 
-import 'debug/firebase_options.dart';
-import 'debug/mainDub.dart';
+import 'src/Chats/firebase_options.dart';
+import 'src/Chats/mainDub.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
