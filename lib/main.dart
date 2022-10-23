@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'LoginPage.dart';
 import 'Setting.dart';
+import 'OniRoom.dart';
+import 'PlayingPage.dart';
+import 'ResultPage.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -41,7 +44,31 @@ class DebugPage extends StatelessWidget{
                     MaterialPageRoute(builder: (context) => const SettingPage(),
                     ));},
               child: const Text('セッティングページ'),
-            )
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OniRoomPage(),
+                    ));},
+              child: const Text('ルームページ'),
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PlayingPage(),
+                    ));},
+              child: const Text('プレイングページ'),
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ResultPage(),
+                    ));},
+              child: const Text('リザルトページ'),
+            ),
           ],
         ),
       ),
