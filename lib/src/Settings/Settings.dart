@@ -10,9 +10,15 @@ class SettingPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: Text("設定"),
+        title: const Text("設定"),
       ),
-      body: Column(),
+      body: Center(
+        child: Column(
+          children: [
+
+          ],
+        )
+      ),
     );
   }
 }

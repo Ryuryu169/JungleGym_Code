@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../HomePage/homepage.dart';
+import 'SignUp.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,132 +12,171 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  InputDecoration inputDecorate(String text) {
+    return InputDecoration(
+      hintText: "$text を入力してください",
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+      ),
+      labelStyle: TextStyle(
+        fontSize: 12,
+        color: Colors.grey[300],
+      ),
+      labelText: text,
+      floatingLabelStyle: const TextStyle(fontSize: 12),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: Colors.grey[300]!,
+          width: 1.0,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: Colors.black,
-          child: Center(
-            child: Column(
-              children: [
-                const SizedBox(height: 100,),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300,
-                  child: Center(
-                    child: Text(
-                      'Jungle GIM',
-                      style:TextStyle(
-                        fontSize: 60,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+      backgroundColor: Colors.grey[100],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              const Padding(
+                padding:
+                    EdgeInsets.only(left: 70, top: 50, right: 70, bottom: 25),
+                child: Text("Jungle Gym"),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey[300]!),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width-50,
-                  height: 60,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Mailaddress',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width-50,
-                  height: 50,
-                  color: Colors.white,
-                  child: TextFormField(
-                    style: const TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width-50,
-                  height: 60,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Passward',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width-50,
-                  height: 50,
-                  color: Colors.white,
-                  child: TextFormField(
-                    obscureText: true,
-                    style: const TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                Row(
-                  children: [
-                    SizedBox(width: (MediaQuery.of(context).size.width-290)/3,),
-                    Container(
-                      width: 145,
-                      height: 90,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                          side: const BorderSide(
-                            color: Colors.white, //枠線!
-                            width: 3, //枠線！
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 50, right: 50, top: 30, bottom: 30),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 30),
+                          child: Text("Jungle Gym にログインする"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: TextFormField(
+                            decoration: inputDecorate("Email Address"),
+                            controller: _emailController,
                           ),
                         ),
-                        onPressed:(){},
-                        child:const Text(
-                          'src.Login',
-                          style: TextStyle(
-                            fontSize: 29,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          child: TextFormField(
+                            decoration: inputDecorate("Password"),
+                            controller: _passwordController,
                           ),
                         ),
-                      ),
-                    ),
-                    SizedBox(width: (MediaQuery.of(context).size.width-290)/3,),
-                    Container(
-                      width: 145,
-                      height: 90,
-                      child: ElevatedButton(
-                        onPressed:(){},
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                          side: const BorderSide(
-                            color: Colors.white, //枠線!
-                            width: 3, //枠線！
-                          ),
-                        ),
-                        child:const Text(
-                          'Sign up',
-                          style: TextStyle(
-                            fontSize: 29,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: (MediaQuery.of(context).size.width-290)/3,),
-                  ],
-                ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30, bottom: 20),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              FirebaseAuth.instance.signInWithEmailAndPassword(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const HomePage(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    const begin = Offset(0.0, 1.0);
+                                    const end = Offset.zero;
+                                    const curve = Curves.ease;
 
-              ],
-            ),
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: const SizedBox(
+                              height: 40,
+                              width: 100,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Login",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey[400]!,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 30,
+                            top: 10,
+                            right: 30,
+                            //bottom: 20,
+                          ),
+                          child: TextButton(
+                              child: const Text("Sign Up"),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const SignUp(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(0.0, 1.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,15 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
+import '../Login/LoginPage.dart';
 import 'AddFriend.dart';
 import 'chat.dart';
-import 'firebase_options.dart';
-import 'login.dart';
-import 'users.dart';
 import 'util.dart';
 
 class RoomsPage extends StatefulWidget {
@@ -20,8 +19,6 @@ class RoomsPage extends StatefulWidget {
 }
 
 class _RoomsPageState extends State<RoomsPage> {
-  bool _error = false;
-  bool _initialized = false;
   User? _user;
 
   @override
@@ -32,14 +29,6 @@ class _RoomsPageState extends State<RoomsPage> {
 
   @override
   Widget build(BuildContext context) {
-    //if (_error) {
-    //  return Container(child: Text('Error', style: const TextStyle(color:Colors.white),),);
-    //}
-
-    //if (!_initialized) {
-    //  return Container(child: Text('Not initialized', style: const TextStyle(color:Colors.white),),);
-    //}
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -51,18 +40,10 @@ class _RoomsPageState extends State<RoomsPage> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         fullscreenDialog: true,
-                        builder: (context) => const UsersPage(),
+                        builder: (context) => const AddFriend(),
                       ),
                     );
                   },
-          ),
-          IconButton(
-            icon: const Icon(Icons.account_circle),
-            onPressed:(){
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const AddFriend())
-              );
-            }
           ),
         ],
         leading: IconButton(
@@ -149,19 +130,14 @@ class _RoomsPageState extends State<RoomsPage> {
     try {
       await Firebase.initializeApp();
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        print(user);
         setState(() {
           _user = user;
         });
       });
-      setState(() {
-        _initialized = true;
-      });
     } catch (e) {
-      print(e);
-      setState(() {
-        _error = true;
-      });
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
