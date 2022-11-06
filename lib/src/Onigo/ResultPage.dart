@@ -52,7 +52,7 @@ class _ResultPageState extends State<ResultPage> {
                 onPressed: (){
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const OniRoomPage(),
+                      MaterialPageRoute(builder: (context) => OniRoomPage(roomNum:20),
                       ));},
                 child: const Text(
                   'ルームに戻る',

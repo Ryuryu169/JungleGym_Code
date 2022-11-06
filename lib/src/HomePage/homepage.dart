@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../Onigo/FirstOnigo.dart';
 import '../Settings/Settings.dart';
 import '../Login/LoginPage.dart';
 import '../Chats/rooms.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         title: const Text("Home Page"),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               icon: const Icon(Icons.settings),
@@ -110,12 +112,12 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.directions_run),
             label: "Onigokko",
           ),
           BottomNavigationBarItem(
-            activeIcon: TrackIcon(colorValue: Colors.white70),
-            icon: TrackIcon(colorValue: Color(0x00aaaaaa)),
+            activeIcon: TrackIcon(colorValue: Colors.blue),
+            icon: TrackIcon(colorValue: Colors.grey),
             label: "Jinrou",
           ),
           BottomNavigationBarItem(
@@ -125,18 +127,18 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: PageView(
-        controller: _pageController,
-        onPageChanged: (page) {
-          setState(() {
-            currentIndex = page;
-          });
-        },
-        children: <Widget>[
-          Container(color: Colors.red),
-          Container(color: Colors.blue),
-          Container(color: Colors.green),
-        ],
-      ),
+          controller: _pageController,
+          onPageChanged: (page) {
+            setState(() {
+              currentIndex = page;
+            });
+          },
+          children: <Widget>[
+            const FirstTag(),
+            Container(color: Colors.blue),
+            Container(color: Colors.green),
+          ],
+        ),
     );
   }
 
@@ -162,7 +164,9 @@ class _HomePageState extends State<HomePage> {
 
 class TrackIcon extends StatelessWidget {
   final Color colorValue;
+
   const TrackIcon({super.key, required this.colorValue});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -72,7 +72,7 @@ class _PlayingPageState extends State<PlayingPage> {
                     children: [
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            backgroundColor: Colors.white,
                           ),
                           onPressed: (){},
                           child: const Text(

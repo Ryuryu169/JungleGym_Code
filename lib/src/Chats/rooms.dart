@@ -7,7 +7,7 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 import '../Login/LoginPage.dart';
-import 'AddFriend.dart';
+import 'addFriend.dart';
 import 'chat.dart';
 import 'util.dart';
 
@@ -47,8 +47,10 @@ class _RoomsPageState extends State<RoomsPage> {
           ),
         ],
         leading: IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: _user == null ? null : logout,
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: (){
+            Navigator.pop(context);
+          },
         ),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         title: const Text('Rooms'),
