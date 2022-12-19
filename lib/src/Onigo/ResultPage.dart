@@ -69,7 +69,7 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
   Widget resultText(bool win) {
-    if(win==true){
+    if(win){
       return Text(
         '勝利！!',
         style: TextStyle(

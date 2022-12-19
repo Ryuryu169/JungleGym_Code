@@ -101,6 +101,7 @@ class _FirstTagState extends State<FirstTag> {
       roomNum: roomNum,
       users: [fu],
       rules: rules,
+      //currentOni: ["No one"],
     );
     return roomNum;
   }

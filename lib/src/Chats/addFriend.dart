@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
@@ -8,7 +9,7 @@ class AddFriend extends StatefulWidget {
   const AddFriend({Key? key}) : super(key: key);
 
   @override
-  _AddFriendState createState() => _AddFriendState();
+  State<AddFriend> createState() => _AddFriendState();
 }
 
 class _AddFriendState extends State<AddFriend> {
@@ -31,7 +32,9 @@ class _AddFriendState extends State<AddFriend> {
       final uid = reference.substring(46, 74);
       thisData["uid"] = uid;
       thisData["message"] = "OK";
-      print(uid);
+      if (kDebugMode) {
+        print(uid);
+      }
     }
     yield thisData;
   }
@@ -113,15 +116,17 @@ class _AddFriendState extends State<AddFriend> {
                             arrayContains: snapshot.data["uid"].toString())
                             .get();
 
+                        // Check whether document "rooms" exists, and returns whether the user exists
                         if(data1.docs[0].data().isNotEmpty){
                           for (var i in data1.docs) {
                             List<dynamic> data = i.data()["userIds"];
                             final uid = FirebaseAuth.instance.currentUser?.uid;
 
-                            data.forEach((j) {
+                            for (var j in data) {
                               if (j == uid) checkIfExists = true;
-                            });
+                            }
                           }
+                          // Depending on whether the user exists, you could add the user.
                           if (!checkIfExists) {
                             types.User user = types.User(id: snapshot.data["uid"]);
                             await FirebaseChatCore.instance

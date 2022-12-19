@@ -1,6 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+/// Several states are given.
+/// With isPlaying at 0, means it is getting ready.
+/// 1 means it's checking on players situations.
+/// 2 means it's currently playing.
+/// 3 means the result page is shown.
+///
+/// currentOni shows who is the current tag.
+
 class PlayOnigo {
   static final PlayOnigo instance = PlayOnigo._privateConstructor();
   User? firebaseUser = FirebaseAuth.instance.currentUser;
@@ -12,11 +20,12 @@ class PlayOnigo {
   }
 
   Future<Map<String, dynamic>> createGroupRoom({
-    String? currentOni,
+    List<String>? currentOni,
     String? currentTime,
     List<int>? code,
     Map<String, dynamic>? metadata,
     Map<String, dynamic>? info,
+    Map<String, dynamic>? items,
     required int roomNum,
     required int? isPlaying,
     required List<String> users,
@@ -34,6 +43,7 @@ class PlayOnigo {
       'isPlaying': isPlaying,
       'metadata': metadata,
       'rules': rules,
+      'items': items,
       'updatedAt': FieldValue.serverTimestamp(),
       'userIds': [firebaseUser?.uid.toString()],
     });
@@ -47,6 +57,7 @@ class PlayOnigo {
       'isPlaying': isPlaying,
       'metadata': metadata,
       'rules': rules,
+      'items' : items,
       'updatedAt': FieldValue.serverTimestamp(),
       'userIds': [firebaseUser?.uid.toString()],
     };

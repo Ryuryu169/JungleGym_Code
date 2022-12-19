@@ -21,12 +21,6 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
   @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -140,25 +134,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
     );
-  }
-
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      _user = FirebaseAuth.instance.currentUser;
-      if (_user?.uid == null) {
-        if (kDebugMode) {
-          print(_user?.uid);
-        }
-        if (!mounted) return;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const LoginPage()));
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
   }
 }
 
