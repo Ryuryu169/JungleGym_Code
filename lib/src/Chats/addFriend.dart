@@ -22,12 +22,8 @@ class _AddFriendState extends State<AddFriend> {
         .collection("users")
         .where("firstName", isEqualTo: id)
         .get();
-    var thisData = data.docs[0]
-        .data()
-        .isNotEmpty ? data.docs[0].data() : error;
-    if (data.docs[0]
-        .data()
-        .isNotEmpty) {
+    var thisData = data.docs[0].data().isNotEmpty ? data.docs[0].data() : error;
+    if (data.docs[0].data().isNotEmpty) {
       final reference = data.docs[0].reference.toString();
       final uid = reference.substring(46, 74);
       thisData["uid"] = uid;
@@ -55,6 +51,7 @@ class _AddFriendState extends State<AddFriend> {
 
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser!.uid);
     return Scaffold(
       appBar: AppBar(
         title: const Text("友達検索"),
@@ -109,49 +106,78 @@ class _AddFriendState extends State<AddFriend> {
                     TextButton(
                       onPressed: () async {
                         bool checkIfExists = false;
+                        try {/*
+                          await FirebaseFirestore.instance
+                              .collection("rooms")
+                              .where("userIds",
+                                  arrayContains:
+                                      snapshot.data["uid"].toString())
+                              .get()
+                              .then((docSnapshot) => {
+                                if (!docSnapshot.docs[0].exists) {
 
-                        final data1 = await FirebaseFirestore.instance
-                            .collection("rooms")
-                            .where("userIds",
-                            arrayContains: snapshot.data["uid"].toString())
-                            .get();
-
-                        // Check whether document "rooms" exists, and returns whether the user exists
-                        if(data1.docs[0].data().isNotEmpty){
-                          for (var i in data1.docs) {
-                            List<dynamic> data = i.data()["userIds"];
+                                }});
+                          final data1 = await FirebaseFirestore.instance
+                              .collection("rooms")
+                              .where("userIds",
+                              arrayContains:
+                              snapshot.data["uid"].toString())
+                              .get();
+                          // Check whether document "rooms" exists, and returns whether the user exists
+                          final userData = data1.docs[0].data();*/
+                          /*if (userData.isNotEmpty) {
                             final uid = FirebaseAuth.instance.currentUser?.uid;
+                            print(uid);
+                            List<dynamic> lists = userData["userIds"];
 
-                            for (var j in data) {
+                            for (var j in lists) {
                               if (j == uid) checkIfExists = true;
+                            }*/
+                            // Depending on whether the user exists, you could add the user.
+                            //if (!checkIfExists) {
+                              types.User user =
+                                  types.User(id: snapshot.data["uid"]);
+                              await FirebaseChatCore.instance.createRoom(user);
+                            /*} else {
+                              showDialog<void>(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    title: const Text('エラー'),
+                                    content: const Text("既に友達として追加されています"),
+                                    actions: <Widget>[
+                                      GestureDetector(
+                                        child: const Text('了解'),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             }
-                          }
-                          // Depending on whether the user exists, you could add the user.
-                          if (!checkIfExists) {
-                            types.User user = types.User(id: snapshot.data["uid"]);
-                            await FirebaseChatCore.instance
-                                .createRoom(user);
                           } else {
-                            showDialog<void>(
-                              context: context,
-                              builder: (_) {
-                                return AlertDialog(
-                                  title: const Text('エラー'),
-                                  content: const Text("既に友達として追加されています"),
-                                  actions: <Widget>[
-                                    GestureDetector(
-                                      child: const Text('了解'),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        } else {
-                          const Text("No such room");
+                            const Text("No such room");
+                          }*/
+                        } catch (e) {
+                          showDialog<void>(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                title: const Text('エラー'),
+                                content: Text("原因不明のエラーです $e"),
+                                actions: <Widget>[
+                                  GestureDetector(
+                                    child: const Text('了解'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       },
                       child: const Text("友達追加する"),

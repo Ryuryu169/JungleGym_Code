@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-import '../../Constants/kaigi.dart';
-import '../HomePage/homepage.dart';
-import 'Controller.dart';
+import '../../Constants/Util.dart';
+import '../KaigiFiles/OnigoKaigi.dart';
+import '../HomePage/Homepage.dart';
+import 'OnigoGuest.dart';
+import 'OnigoPlay.dart';
 
 /// A class for creating a game room.
 
@@ -21,7 +23,9 @@ class OniRoomPage extends StatefulWidget {
 
 class _OniRoomPageState extends State<OniRoomPage> {
   final firebase = FirebaseFirestore.instance;
-  final onigo = PlayOnigo.instance;
+  final GeneralUse util = GeneralUse();
+  final PlayOnigo onigo = PlayOnigo.instance;
+  Random random = Random();
 
   int playerNumInit = 0;
 
@@ -62,6 +66,12 @@ class _OniRoomPageState extends State<OniRoomPage> {
               return Text(snapshot.error.toString());
             } else if (snapshot.hasData) {
               var data = snapshot.data!;
+              final ready = data["ready"];
+              final GeneralUse util = GeneralUse();
+              final listPl = ready.entries
+                  .map((e) => WaitingPlayers(e.key, e.value))
+                  .toList();
+              final num = listPl.length;
               var users = data['userIds'];
               var rules = data["rules"];
               int oniNum = rules["num"];
@@ -70,12 +80,16 @@ class _OniRoomPageState extends State<OniRoomPage> {
               String time = '$minute : ${second.toString().padLeft(2, "0")}';
 
               return FutureBuilder<List<String>>(
-                future: findUser(users),
+                future: util.findUser(users),
                 builder: (context, snapshot2) {
                   if (snapshot2.hasData) {
                     playerNumInit =
                         snapshot2.data!.isNotEmpty ? snapshot2.data!.length : 2;
                     // print(snapshot.data);
+                    final names = snapshot2.data;
+                    for (int i = 0; i < names!.length; i++) {
+                      listPl[i].name = names[i];
+                    }
                     return Center(
                       child: Padding(
                         padding: const EdgeInsets.all(30),
@@ -140,6 +154,45 @@ class _OniRoomPageState extends State<OniRoomPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(20),
+                              //child: SingleChildScrollView(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(
+                                    child: GridView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 3),
+                                      itemCount: num,
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          children: [
+                                            Expanded(
+                                                flex: 6,
+                                                child: util.checkReady(
+                                                    listPl, index)),
+                                            Expanded(
+                                                flex: 2,
+                                                child: util.showText(
+                                                    listPl, index, "name")),
+                                            Expanded(
+                                                flex: 2,
+                                                child: util.showText(
+                                                    listPl, index, "key")),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
                               child: ElevatedButton(
                                 onPressed: () {
                                   var num = rules["time"] / 60;
@@ -182,7 +235,7 @@ class _OniRoomPageState extends State<OniRoomPage> {
                                                       widget.roomNum.toString())
                                                   .update({"rules": rules});
 
-                                              if(!mounted) return;
+                                              if (!mounted) return;
                                               Navigator.of(context).pop();
                                             },
                                             child: const Text("Save"),
@@ -210,32 +263,54 @@ class _OniRoomPageState extends State<OniRoomPage> {
                                             onPressed: () async {
                                               // This function creates a list of random players.
                                               // You can add the number of tags by increasing the oniNum.
-                                              var oniPlayers = returnRandom(
-                                                  users, users.length, oniNum);
+                                              if (data["isPlaying"] == 1) {
+                                                final now = DateTime.now();
+                                                final endTime = now.add(
+                                                  Duration(
+                                                    minutes: rules["time"] / 60,
+                                                  ),
+                                                );
+                                                var oniPlayers = returnRandom(
+                                                    users,
+                                                    users.length,
+                                                    oniNum);
+                                                Map<String, dynamic> codeMap =
+                                                    randomCode(oniPlayers!);
 
-                                              // You add the information to the Firebase, and change the state to getting ready.
-                                              await firebase
-                                                  .collection("Onigo")
-                                                  .doc(
-                                                      widget.roomNum.toString())
-                                                  .update(
-                                                {
-                                                  "currentOni": oniPlayers,
-                                                  "isPlaying": 1,
-                                                  "rules": rules,
-                                                  "updatedAt": FieldValue
-                                                      .serverTimestamp(),
-                                                },
-                                              );
-                                              if (!mounted) return;
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Controller(
-                                                          roomNum:
-                                                              widget.roomNum),
-                                                ),
-                                              );
+                                                // You add the information to the Firebase, and change the state to getting ready.
+                                                await firebase
+                                                    .collection("Onigo")
+                                                    .doc(widget.roomNum
+                                                        .toString())
+                                                    .update(
+                                                  {
+                                                    "code": codeMap,
+                                                    "endTime": endTime,
+                                                    "currentOni": oniPlayers,
+                                                    "isPlaying": 2,
+                                                    "rules": rules,
+                                                    "updatedAt": FieldValue
+                                                        .serverTimestamp(),
+                                                  },
+                                                );
+                                                if (!mounted) return;
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PlayingPage(
+                                                            roomNum:
+                                                                widget.roomNum,
+                                                            gameTime:
+                                                                rules["time"]),
+                                                  ),
+                                                  // TODO: Check this part!
+                                                );
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            "Not Ready yet")));
+                                              }
                                             },
                                             child: const Text("Start"),
                                           )
@@ -247,6 +322,27 @@ class _OniRoomPageState extends State<OniRoomPage> {
                                 child: const Text("Start Game"),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await firebase
+                                      .collection("Onigo")
+                                      .doc(widget.roomNum
+                                      .toString())
+                                      .update(
+                                    {
+                                      "isPlaying": 1,
+                                      "updatedAt": FieldValue
+                                          .serverTimestamp(),
+                                    },
+                                  );
+                                  if(!mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Updated"),));
+                                },
+                                child: Text("Debug"),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -256,7 +352,7 @@ class _OniRoomPageState extends State<OniRoomPage> {
                 },
               );
             } else {
-              return const Text("No data");
+              return Text("No data ${widget.roomNum.toString()}");
             }
           },
         ),
@@ -269,7 +365,6 @@ class _OniRoomPageState extends State<OniRoomPage> {
     List<int> oni = [];
 
     for (int i = 0; i < oniNum; i++) {
-      Random random = Random();
       int num = random.nextInt(playerNum);
       if (oni.isEmpty) {
         while (oni.contains(num)) {
@@ -282,7 +377,16 @@ class _OniRoomPageState extends State<OniRoomPage> {
     return oniPlayer;
   }
 
-  Future<List<String>> findUser(List<dynamic> uid) async {
+  Map<String, dynamic> randomCode(List<String> oniPlayer) {
+    Map<String, dynamic> codeMap = {};
+
+    for (var i in oniPlayer) {
+      codeMap[i] = util.randomCode(codeMap);
+    }
+    return codeMap;
+  }
+
+/*Future<List<String>> findUser(List<dynamic> uid) async {
     List<String> names = [];
     for (var d in uid) {
       final cu = await firebase.collection("users").doc(d.toString()).get();
@@ -290,5 +394,5 @@ class _OniRoomPageState extends State<OniRoomPage> {
       names.add(data!["firstName"].toString());
     }
     return names;
-  }
+  }*/
 }

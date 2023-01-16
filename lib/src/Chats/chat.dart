@@ -8,7 +8,7 @@ import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-import '../../Constants/open_file.dart';
+import '../../Constants/openFile.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({

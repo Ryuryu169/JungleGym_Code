@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>858999482242-ilmaufqdk57ds2h0bjq7nei36nc3ng3q.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.858999482242-ilmaufqdk57ds2h0bjq7nei36nc3ng3q</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>858999482242-6s0tr068doslv3gusovvh5fcseoa78vm.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDIMg7Uqb45m3cGyQNe8cNiHEXktFe0XZk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>858999482242</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.doushinkaiki.junglegym</string>
+	<key>PROJECT_ID</key>
+	<string>junglegym-cd7fd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>junglegym-cd7fd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:858999482242:ios:2cb85837bcbd510912919b</string>
+	<key>DATABASE_URL</key>
+	<string>https://junglegym-cd7fd-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../Onigo/FirstOnigo.dart';
+import '../FirstPage/FirstJinrou.dart';
+import '../FirstPage/FirstOnigo.dart';
 import '../Settings/Settings.dart';
-import '../Login/LoginPage.dart';
 import '../Chats/rooms.dart';
+import 'TrackIcon.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +17,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController(initialPage: 0);
-  User? _user;
   int currentIndex = 0;
 
   @override
@@ -129,29 +128,10 @@ class _HomePageState extends State<HomePage> {
           },
           children: <Widget>[
             const FirstTag(),
-            Container(color: Colors.blue),
+            const FirstJinrou(),
             Container(color: Colors.green),
           ],
         ),
-    );
-  }
-}
-
-class TrackIcon extends StatelessWidget {
-  final Color colorValue;
-
-  const TrackIcon({super.key, required this.colorValue});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
-      width: 30,
-      child: Image.asset(
-        "assets/icons/wolf.png",
-        height: 30,
-        color: colorValue,
-      ),
     );
   }
 }

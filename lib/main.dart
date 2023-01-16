@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:jungle_gym/src/HomePage/homepage.dart';
+import 'package:jungle_gym/src/HomePage/Homepage.dart';
 import 'package:jungle_gym/src/Login/LoginPage.dart';
 
-import 'src/Chats/firebase_options.dart';
+import 'src/Chats/firebaseOptions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

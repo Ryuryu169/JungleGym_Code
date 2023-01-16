@@ -1,14 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-/// Several states are given.
-/// With isPlaying at 0, means it is getting ready.
-/// 1 means it's checking on players situations.
-/// 2 means it's currently playing.
-/// 3 means the result page is shown.
-///
-/// currentOni shows who is the current tag.
-
 class PlayOnigo {
   static final PlayOnigo instance = PlayOnigo._privateConstructor();
   User? firebaseUser = FirebaseAuth.instance.currentUser;
@@ -21,11 +13,12 @@ class PlayOnigo {
 
   Future<Map<String, dynamic>> createGroupRoom({
     List<String>? currentOni,
-    String? currentTime,
-    List<int>? code,
+    Map<String, dynamic>? code,
     Map<String, dynamic>? metadata,
     Map<String, dynamic>? info,
     Map<String, dynamic>? items,
+    Map<String, dynamic>? ready,
+    required String host,
     required int roomNum,
     required int? isPlaying,
     required List<String> users,
@@ -35,14 +28,16 @@ class PlayOnigo {
 
 
     await FirebaseFirestore.instance.collection("Onigo").doc(roomNum.toString()).set({
+      'roomNum' : roomNum,
       'createdAt': FieldValue.serverTimestamp(),
       'currentOni' : currentOni,
-      'currentTime' : currentTime,
       'code' : code,
+      'host': host,
       'info' : info,
       'isPlaying': isPlaying,
       'metadata': metadata,
       'rules': rules,
+      'ready' : ready,
       'items': items,
       'updatedAt': FieldValue.serverTimestamp(),
       'userIds': [firebaseUser?.uid.toString()],
@@ -51,31 +46,31 @@ class PlayOnigo {
       'roomNum' : roomNum,
       'createdAt': FieldValue.serverTimestamp(),
       'currentOni' : currentOni,
-      'currentTime' : currentTime,
       'code' : code,
+      'host' : host,
       'info' : info,
       'isPlaying': isPlaying,
       'metadata': metadata,
-      'rules': rules,
+      'rules' : rules,
+      'ready' : ready,
       'items' : items,
       'updatedAt': FieldValue.serverTimestamp(),
       'userIds': [firebaseUser?.uid.toString()],
     };
   }
 
-  void updateRoom(Map<String, dynamic> room) async {
+  Future<void> updateRoom(Map<String, dynamic> room) async {
     if (firebaseUser == null) return;
 
     room.removeWhere((key, value) =>
     key == 'createdAt' ||
-        key == 'roomNum' ||
         key == 'lastMessages');
 
     room['updatedAt'] = FieldValue.serverTimestamp();
-
+    print(room["roomNum"]);
     await FirebaseFirestore.instance
         .collection("Onigo")
-        .doc(room['roomNum'])
+        .doc(room['roomNum'].toString())
         .update(room);
   }
 
@@ -86,3 +81,12 @@ class PlayOnigo {
         .delete();
   }
 }
+
+/// Several states are given.
+/// With isPlaying at 0, means it is getting ready.
+/// 0 means it's checking on players situations.
+/// 1 means all players are ready.
+/// 2 means it's currently playing.
+/// 3 means the result page is shown.
+///
+/// currentOni shows who is the current tag.

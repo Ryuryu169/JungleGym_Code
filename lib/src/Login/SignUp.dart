@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
-import '../HomePage/homepage.dart';
+import '../HomePage/Homepage.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -51,6 +51,7 @@ class _SignUpState extends State<SignUp> {
       child: TextFormField(
         decoration: inputDecorate(text),
         controller: control,
+        textInputAction: TextInputAction.next,
       ),
     );
   }
@@ -106,6 +107,7 @@ class _SignUpState extends State<SignUp> {
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
+                      //await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
                       await FirebaseChatCore.instance.createUserInFirestore(
                         types.User(
                           firstName: _idController.text,
