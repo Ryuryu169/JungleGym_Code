@@ -35,6 +35,7 @@ class _FirstJinrouState extends State<FirstJinrou>
       anime: _controller,
       controller: _textEditingController,
       rules: const {},
+      color: Colors.lightGreenAccent.withOpacity(0.1),
     );
   }
 }

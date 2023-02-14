@@ -22,6 +22,7 @@ class PlayJinrou {
     required int roomNum,
     required int? isPlaying,
     required List<String> users,
+    required Map<String, dynamic> ready,
     required Map<String, dynamic> rules,
   }) async {
     if (firebaseUser == null) return Future.error('User does not exist');
@@ -37,6 +38,7 @@ class PlayJinrou {
       'metadata': metadata,
       'roles' : roles,
       'rules': rules,
+      'ready' : ready,
       'items': items,
       'updatedAt': FieldValue.serverTimestamp(),
       'userIds': [firebaseUser?.uid.toString()],
@@ -51,6 +53,7 @@ class PlayJinrou {
       'isPlaying': isPlaying,
       'metadata': metadata,
       'roles' : roles,
+      'ready' : ready,
       'rules': rules,
       'items' : items,
       'updatedAt': FieldValue.serverTimestamp(),

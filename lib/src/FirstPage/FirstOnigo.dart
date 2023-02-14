@@ -34,6 +34,7 @@ class _FirstTagState extends State<FirstTag>
       name: "Onigo",
       controller: _textController,
       anime: _controller,
+      color: Colors.cyan.withOpacity(0.1),
       rules: const {},
     );
   }

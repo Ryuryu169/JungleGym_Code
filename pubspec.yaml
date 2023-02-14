@@ -52,6 +52,11 @@ dependencies:
   settings_ui: ^2.0.2
   google_sign_in: ^5.4.3
   sliding_up_panel: ^2.0.0+1
+  universal_platform: ^1.0.0+1
+  google_fonts: ^4.0.3
+  health: ^4.4.0
+  permission_handler: ^10.2.0
+  pedometer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

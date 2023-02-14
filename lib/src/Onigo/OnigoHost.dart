@@ -267,7 +267,7 @@ class _OniRoomPageState extends State<OniRoomPage> {
                                                 final now = DateTime.now();
                                                 final endTime = now.add(
                                                   Duration(
-                                                    minutes: rules["time"] / 60,
+                                                    minutes: (rules["time"] / 60).round(),
                                                   ),
                                                 );
                                                 var oniPlayers = returnRandom(

@@ -61,13 +61,13 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    storageBucket: '',
-    iosClientId: '',
-    iosBundleId: '',
+    apiKey: 'AIzaSyDIMg7Uqb45m3cGyQNe8cNiHEXktFe0XZk',
+    appId: '1:858999482242:ios:e337d8c2719398f912919b',
+    messagingSenderId: '858999482242',
+    projectId: 'junglegym-cd7fd',
+    storageBucket: 'junglegym-cd7fd.appspot.com',
+    iosClientId: '858999482242-6s0tr068doslv3gusovvh5fcseoa78vm.apps.googleusercontent.com',
+    iosBundleId: 'com.doushinkaiki.jungleGym',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

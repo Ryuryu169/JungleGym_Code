@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jungle_gym/src/Settings/AccountCheck.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../../Constants/Util.dart';
+import '../../Constants/debug.dart';
 import '../Login/LoginPage.dart';
 
 class SettingPage extends StatefulWidget {
@@ -24,7 +26,7 @@ class _SettingPageState extends State<SettingPage> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: const Text("設定"),
+        title: Text("設定",style: GoogleFonts.kiwiMaru()),
       ),
       backgroundColor: const Color.fromRGBO(240, 240, 240, 1),
       body: FutureBuilder<Map<String, dynamic>>(
@@ -33,9 +35,9 @@ class _SettingPageState extends State<SettingPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            return const Text("Error Occured");
+            return const Text("エラー発生");
           } else if (!snapshot.hasData) {
-            return const Text("No Data");
+            return const Text("データはありません");
           }
           final data = snapshot.data;
           return Center(
@@ -44,16 +46,16 @@ class _SettingPageState extends State<SettingPage> {
               child: SettingsList(
                 sections: [
                   SettingsSection(
-                    title: const Text("Account Info"),
+                    title: const Text("アカウントの情報"),
                     tiles: <SettingsTile>[
                       SettingsTile(
                         leading: const Icon(Icons.email),
-                        title: const Text("Email"),
+                        title: const Text("メールアカウント"),
                         value: Text("${user!.email}"),
                       ),
                       SettingsTile(
                         leading: const Icon(Icons.abc),
-                        title: const Text("Name"),
+                        title: const Text("名前"),
                         value: Text("${data!["name"]}"),
                       ),
                       SettingsTile(
@@ -64,40 +66,32 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: const Text('Language'),
+                    title: const Text("言語"),
                     tiles: <SettingsTile>[
                       SettingsTile.navigation(
                         leading: const Icon(Icons.language),
-                        title: const Text('Language'),
-                        value: const Text('Japanese'),
-                      ),
-                      SettingsTile.switchTile(
-                        onToggle: (value) {
-                          value = !value;
-                        },
-                        initialValue: true,
-                        leading: const Icon(Icons.format_paint),
-                        title: const Text('Enable custom theme'),
+                        title: const Text('言語'),
+                        value: const Text('日本語'),
                       ),
                     ],
                   ),
                   SettingsSection(
-                    title: const Text("Account Settings"),
+                    title: const Text("アカウント設定"),
                     tiles: <SettingsTile>[
                       SettingsTile.navigation(
                         leading: const Icon(Icons.password),
-                        title: const Text("Change Password"),
+                        title: const Text("パスワード変更"),
                         onPressed: (BuildContext context) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text("Change Password"),
+                                title: const Text("パスワードの変更"),
                                 content: Text(
-                                    "We will send a text to ${user!.email}"),
+                                    "${user!.email} にパスワードを変更するためのリンクを送信します"),
                                 actions: [
                                   TextButton(
-                                    child: const Text("Confirm"),
+                                    child: const Text("了解"),
                                     onPressed: () async {
                                       await FirebaseAuth.instance
                                           .sendPasswordResetEmail(
@@ -112,24 +106,24 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                       SettingsTile.navigation(
                         leading: const Icon(Icons.delete),
-                        title: const Text("Delete Account"),
+                        title: const Text("アカウント削除"),
                         onPressed: (BuildContext context) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text("Delete Account"),
-                                content: const Text("Are you sure?"),
+                                title: const Text("アカウントの削除"),
+                                content: const Text("宜しいですか？"),
                                 actions: [
                                   TextButton(
-                                    child: const Text("Sure"),
+                                    child: const Text("確定"),
                                     onPressed: () async {
-                                      await user?.delete();
+                                      //await user?.delete();
                                       if (!mounted) return;
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              const LoginPage(),
+                                              FootCount(),//const LoginPage(),
                                         ),
                                       );
                                     },
@@ -143,19 +137,19 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: const Text("Logout"),
+                    title: const Text("ログアウト"),
                     tiles: <SettingsTile>[
                       SettingsTile.navigation(
                         leading: const Icon(Icons.logout),
-                        title: const Text("Logout"),
-                        value: const Text("Switch to other account"),
+                        title: const Text("ログアウト"),
+                        value: const Text("アカウントの切り替え"),
                         onPressed: (BuildContext context) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text("Logout"),
-                                content: const Text("Do you want to logout?"),
+                                title: const Text("ログアウト"),
+                                content: const Text("ログアウトしても宜しいですか？"),
                                 actions: [
                                   TextButton(
                                     onPressed: () async {
@@ -173,13 +167,13 @@ class _SettingPageState extends State<SettingPage> {
                                         ),
                                       );
                                     },
-                                    child: const Text("Sure"),
+                                    child: const Text("確定"),
                                   ),
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: const Text("Canel"),
+                                    child: const Text("キャンセル"),
                                   ),
                                 ],
                               );

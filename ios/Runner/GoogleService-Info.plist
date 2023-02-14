@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>858999482242-ilmaufqdk57ds2h0bjq7nei36nc3ng3q.apps.googleusercontent.com</string>
+	<string>858999482242-1d926v731nm1ehqs93e1ic50d5vhtc3n.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.858999482242-ilmaufqdk57ds2h0bjq7nei36nc3ng3q</string>
+	<string>com.googleusercontent.apps.858999482242-1d926v731nm1ehqs93e1ic50d5vhtc3n</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>858999482242-6s0tr068doslv3gusovvh5fcseoa78vm.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.doushinkaiki.junglegym</string>
+	<string>com.doushinkaiki.jungleGym</string>
 	<key>PROJECT_ID</key>
 	<string>junglegym-cd7fd</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:858999482242:ios:2cb85837bcbd510912919b</string>
+	<string>1:858999482242:ios:e337d8c2719398f912919b</string>
 	<key>DATABASE_URL</key>
 	<string>https://junglegym-cd7fd-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 import '../HomePage/Homepage.dart';
 import 'SignUp.dart';
@@ -201,7 +202,9 @@ class _LoginPageState extends State<LoginPage> {
                                   types.User(
                                     firstName: user.user!.displayName,
                                     lastName: user.user!.displayName,
-                                    id: user.user!.uid.toString().replaceAll(' ',''),
+                                    id: user.user!.uid
+                                        .toString()
+                                        .replaceAll(' ', ''),
                                   ),
                                 );
                                 if (!mounted) return;
@@ -243,8 +246,8 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    children: const [
-                                      Padding(
+                                    children: [
+                                      const Padding(
                                         padding: EdgeInsets.all(5),
                                         child: SizedBox(
                                           width: 30,
@@ -257,18 +260,19 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 20, right: 20),
-                                        child: Text(
-                                          "Sign In with Google",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            //letterSpacing: 1,
-                                            fontSize: 20,
-                                            color: Colors.black54,
+                                          padding: const EdgeInsets.only(
+                                              left: 20, right: 20),
+                                          child: Text(
+                                            "Sign In with Google",
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              //letterSpacing: 1,
+                                              fontSize: chooseOS(),
+                                              color: Colors.black54,
+                                            ),
                                           ),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -288,6 +292,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  double? chooseOS() {
+    if (UniversalPlatform.isAndroid) {
+      return 11.0;
+    } else if (UniversalPlatform.isWeb) {
+      return 20.0;
+    } else if(UniversalPlatform.isIOS){
+      return 10.5;
+    }else{
+      return 20.0;
+    }
+  }
+
   Future<UserCredential> signInWithGoogle() async {
     final googleUser = await GoogleSignIn(
             scopes: [
@@ -296,7 +312,9 @@ class _LoginPageState extends State<LoginPage> {
             clientId:
                 "858999482242-tp49dsiugjkuoch272b5e462565pc8ov.apps.googleusercontent.com")
         .signIn();
-    print(googleUser);
+    if (kDebugMode) {
+      print(googleUser);
+    }
     final googleAuth = await googleUser?.authentication;
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,

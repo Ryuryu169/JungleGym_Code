@@ -48,6 +48,25 @@ class FirstPageClass {
         );
         return roomNum;
       case "Jinrou":
+        final playJinrou = PlayJinrou.instance;
+
+        Map<String, dynamic> rules = {
+          "lose": 0,
+          "num": 1,
+          "time": 300,
+          "return": false,
+          "cooltime": 10,
+        };
+
+        await playJinrou.createGroupRoom(
+          isPlaying: 0,
+          roomNum: roomNum,
+          users: [fu],
+          rules: rules,
+          ready: {fu : 1},
+          host: fu,
+          //currentOni: ["No one"],
+        );
         return roomNum;
       default:
         return roomNum;
@@ -81,8 +100,20 @@ class FirstPageClass {
     switch(name){
       case "Onigo":
         return EnterPage(roomNum: roomNum,);
+      case "Jinrou":
+        return EnterPage(roomNum: roomNum,);
       default:
         return Container();
+    }
+  }
+  String returnString(String name){
+    switch(name){
+      case "Onigo":
+        return "鬼ごっこ";
+      case "Jinrou":
+        return "人狼";
+      default:
+        return "Default";
     }
   }
 }

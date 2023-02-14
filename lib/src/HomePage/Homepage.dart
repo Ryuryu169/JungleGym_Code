@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../FirstPage/FirstJinrou.dart';
 import '../FirstPage/FirstOnigo.dart';
@@ -32,61 +31,63 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        title: const Text("Home Page"),
+        title: Text("ホームページ", style: GoogleFonts.kiwiMaru()),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push<void>(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) {
-                      return const SettingPage();
-                    },
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      const double begin = 0.0;
-                      const double end = 1.0;
-                      final Animatable<double> tween =
-                          Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: Curves.easeInOut));
-                      final Animation<double> doubleAnimation =
-                          animation.drive(tween);
-                      return FadeTransition(
-                        opacity: doubleAnimation,
-                        child: child,
-                      );
-                    },
-                  ),
-                );
-              }),
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push<void>(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return const SettingPage();
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const double begin = 0.0;
+                    const double end = 1.0;
+                    final Animatable<double> tween =
+                        Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: Curves.easeInOut));
+                    final Animation<double> doubleAnimation =
+                        animation.drive(tween);
+                    return FadeTransition(
+                      opacity: doubleAnimation,
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
           IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.push<void>(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) {
-                      return const RoomsPage();
-                    },
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      const double begin = 0.0;
-                      const double end = 1.0;
-                      final Animatable<double> tween =
-                          Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: Curves.easeInOut));
-                      final Animation<double> doubleAnimation =
-                          animation.drive(tween);
-                      return FadeTransition(
-                        opacity: doubleAnimation,
-                        child: child,
-                      );
-                    },
-                  ),
-                );
-              }),
+            icon: const Icon(Icons.account_circle),
+            onPressed: () {
+              Navigator.push<void>(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return const RoomsPage();
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const double begin = 0.0;
+                    const double end = 1.0;
+                    final Animatable<double> tween =
+                        Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: Curves.easeInOut));
+                    final Animation<double> doubleAnimation =
+                        animation.drive(tween);
+                    return FadeTransition(
+                      opacity: doubleAnimation,
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -120,18 +121,18 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: PageView(
-          controller: _pageController,
-          onPageChanged: (page) {
-            setState(() {
-              currentIndex = page;
-            });
-          },
-          children: <Widget>[
-            const FirstTag(),
-            const FirstJinrou(),
-            Container(color: Colors.green),
-          ],
-        ),
+        controller: _pageController,
+        onPageChanged: (page) {
+          setState(() {
+            currentIndex = page;
+          });
+        },
+        children: <Widget>[
+          const FirstTag(),
+          const FirstJinrou(),
+          Container(color: Colors.green),
+        ],
+      ),
     );
   }
 }
