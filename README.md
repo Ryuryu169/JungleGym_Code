@@ -1,25 +1,19 @@
 # jungle_gym
 
-ここに色々作品で完成したものを入れていってください！
-Teams でも言ったように、自身のブランチを作ってからコミットしてください～
-src.Firebase の設定はしてありますが、エラーが起きた際にはご連絡下さい！
-原則 SQLite は使わないつもりですが、何かFirebase で不都合があった際にはご連絡ください！
+This project was made to build an out door game in Flutter. The webapp is under construction and may contain bugs.
 
-注記・作成者
-##レウェティ
-main.dart
-→特になし
+Features
+--
+ - Tag
+ - Werewolf
+ - System settings
+ - Login/Logout
 
-##廣田
+Disclaimer
+--
+By downloading and using the code, you assume all risks associate with the software. The project is provded "as is", and the author assumes no liability for any damages or losses that may occur from using this software.
 
-
-##井
-
-
-##阿部
-
-
-##西尾
-
-
-##伊藤
+Usage
+--
+If you have a flutter installed, download the code, and build it on your IDE.
+If you do not have one, visit our [website](https://ryuryu169.github.io/jungleGym) to take a glimpse of how it works.
